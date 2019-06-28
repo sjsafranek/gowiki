@@ -461,6 +461,9 @@ func editFile(w http.ResponseWriter, req *http.Request) {
 	if req.Method == "POST" && canEdit {
 		req.ParseForm()
 		decoder.Decode(file, req.PostForm)
+		// if this isn't set it can't be saved/retrieved from the database
+		file.Path = path
+		//.end
 		_, err = dbm.Update(file)
 		/* if that update went well, update the in-memory bundle to that content */
 		if err == nil {
